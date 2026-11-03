@@ -61,7 +61,7 @@ One finding **narrows H3** (see §4): TraceDev already uses a trace graph as com
 
 ## 6. Still to do (part of task 0.2's remaining time)
 
-- [ ] Linh reads TraceDev and UserTrace in full and records her own view here (this is the "competent professional" judgement the claim needs).
+- [ ] Linh reads TraceDev and UserTrace in full and records his own view here (this is the "competent professional" judgement the claim needs).
 - [ ] Read MARE's original paper.
 - [ ] Check contextgit and requirements-to-test-agent.
 - [ ] Link the FY25-26 searches (crewAI/AutoGen state issues) with their original dates.
