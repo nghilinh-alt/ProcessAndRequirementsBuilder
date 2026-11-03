@@ -1,8 +1,8 @@
 # MAMO Engine — Detailed build plan, Phases 0–3 (Nov 2026 – Jan 2027)
 
-**Prepared:** 4 Nov 2026 · **Status:** DRAFT for Linh's review
+**Prepared:** 4 Nov 2026 · **Status:** Approved by Linh Nghi, 4 Nov 2026
 **Parent plan:** [BUILD_PLAN.md](BUILD_PLAN.md)
-**Capacity assumed:** ~5 hrs/week (FY26-27 R&D budget: ~220 hrs over Aug 2026 – Jun 2027)
+**Capacity:** ~6 hrs/week to 31 Dec 2026 (option (a), confirmed 4 Nov 2026). This includes Linh's own design and planning time away from the keyboard, not just sessions with Claude.
 
 This plan covers everything up to and including the **single-agent baseline (MAMO-RT-01)**. That baseline is the yardstick every later experiment is measured against, so these phases are about building a reliable ruler, not a clever engine.
 
@@ -15,14 +15,12 @@ This plan covers everything up to and including the **single-agent baseline (MAM
 | 0 | Records in order, Python project skeleton, prior-knowledge search | 11 | 17 Nov | Supporting / admin |
 | 1 | Schemas, ID rules, SQLite trace store, logged LLM wrapper | 12 | 1 Dec | Supporting |
 | 2 | 3 gold-standard cases + scoring harness | 19 | 22 Dec | Supporting |
-| 3 | Baseline runs, scored report, MAMO-RT-01 log | 6 | mid-Jan 2027 | **Core** |
+| 3 | Baseline runs, scored report, MAMO-RT-01 log | 6 | 31 Dec 2026 | **Core** |
 | | **Total** | **~48** | | |
 
-**Capacity check:** 4 Nov – 31 Dec is about 8 weeks, or ~40 hrs at 5 hrs/week. This plan needs ~48. Either:
-- **(a)** do ~6 hrs/week to land the baseline by end-Dec, or
-- **(b)** accept the baseline in the **first two weeks of Jan 2027**, which pushes Phase 4 back by about two weeks (still inside the Jan–Feb window).
+**Capacity (decided 4 Nov 2026):** option (a), ~6 hrs/week, so the baseline lands by **31 Dec 2026**. The hours count all R&D work on these tasks, including Linh's own thinking, sketching and planning done outside Claude sessions, as long as it's logged (see "Logging your own time" below).
 
-Recommendation: plan on (b) and treat (a) as a bonus. It doesn't affect the R&D story, because the baseline is the first core experiment wherever it lands.
+At ~6 hrs/week the plan uses ~48 of ~220 budgeted FY26-27 hours by end-Dec. That leaves ~170 for Jan–Jun 2027, less whatever Round 0 (Aug–Oct) is shown to have used.
 
 ---
 
@@ -30,7 +28,7 @@ Recommendation: plan on (b) and treat (a) as a bonus. It doesn't affect the R&D 
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
-| 0.1 | **Timesheet**: create `admin/` outside the repo (or a spreadsheet) with columns *date, hours, phase, task #, experiment ref, R&D type*. Start logging today. | 0.5 | First entry made |
+| 0.1 | **Timesheet**: create `admin/` outside the repo (or a spreadsheet) with columns *date, hours, phase, task #, experiment ref, R&D type, mode (own work / with Claude), what was worked out*. Start logging today. | 0.5 | First entry made |
 | 0.2 | **Aug–Oct evidence export**: list the commits, chats and files from Round 0 with their dates. Store the list (not client material) in `experiments/round0_evidence.md`. | 2 | List committed |
 | 0.3 | **Round 0 write-up**: `experiments/MAMO-RT-00_round0.md`, using the log template. Label it "written 4–17 Nov 2026 from evidence listed in round0_evidence.md". Record what was tried, what failed (lost links, duplicates, invented requirements) and how that led to H1–H5. | 3 | Committed |
 | 0.4 | **Prior-knowledge search** (R&D plan §3): academic, commercial tools, open-source. Write dated notes to `research/prior_knowledge_2026-11.md`: what each source does, what it doesn't, and the remaining gap. | 4 | Notes committed; any narrowing of H1–H5 recorded |
@@ -84,7 +82,7 @@ Write the **acceptance rules first**, then the gold standard, then leave it for 
 
 The tricky part: the engine will never word a requirement exactly the way the gold standard does, so scoring needs a **matching step**.
 
-**Decision proposed:** use an LLM judge with a fixed prompt at temperature 0. It decides, for each generated requirement, which gold requirement (if any) it matches. Linh spot-checks 20% of judge decisions on the baseline run, and the agreement rate is recorded. If agreement is below 90%, change the judge prompt before trusting any scores. That agreement figure is part of the evidence the ruler is reliable.
+**Decision (confirmed 4 Nov 2026):** use an LLM judge with a fixed prompt at temperature 0. It decides, for each generated requirement, which gold requirement (if any) it matches. Linh spot-checks 20% of judge decisions on the baseline run, and the agreement rate is recorded. If agreement is below 90%, change the judge prompt before trusting any scores. That agreement figure is part of the evidence the ruler is reliable.
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
@@ -94,7 +92,7 @@ The tricky part: the engine will never word a requirement exactly the way the go
 
 ---
 
-## Phase 3 — Baseline, MAMO-RT-01 (Jan 2027, or late Dec if ahead)
+## Phase 3 — Baseline, MAMO-RT-01 (23–31 Dec 2026)
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
@@ -113,7 +111,7 @@ The tricky part: the engine will never word a requirement exactly the way the go
 |---|---|---|
 | 0.4 | Do any prior-knowledge findings narrow H1–H5? | Keep H1–H5 as is |
 | 1.4 | Which Claude model for engine runs vs the judge | Same mid-tier model for both; record the model ID in every run |
-| 2B | Accept LLM-judge matching (with spot-checks) | Yes |
+| 2B | ~~Accept LLM-judge matching (with spot-checks)~~ | Confirmed 4 Nov 2026 |
 | 3.4 | Is the baseline already near target? If so, the benchmark may be too easy | Re-review the gold standards before Phase 4 |
 
 ---
@@ -124,6 +122,17 @@ The tricky part: the engine will never word a requirement exactly the way the go
 2. **Work (≈4.5 hrs)** in one or two blocks.
 3. **End (10 min):** commit with a clear message, push, fill in the timesheet row (task #, hours, R&D type).
 
+## Logging your own time
+
+Thinking and planning time counts as R&D when it's spent on these tasks: for example working through the trace-store design on a walk, or sketching gold-standard processes on paper. It only holds up if it's recorded **on the day**, with enough detail to show what it was:
+
+- Log it the same day in the timesheet with mode = *own work*.
+- Write one line on what you worked out (for example "decided link-matching rule: both endpoints must match linked gold items").
+- If it produced a sketch or notes, photograph or save them to `research/notes/YYYY-MM-DD_<topic>.md` and commit. That gives the hours a dated trace.
+- Don't log time on WCQ/FCM delivery, admin or general reading unrelated to a task #.
+
+A timesheet line with no task # and no "what was worked out" is the kind an assessor is likely to question.
+
 ---
 
-**Handoff:** Linh reviews this plan, especially the capacity choice ((a) or (b)) and the LLM-judge decision. Frontier team then starts tasks 0.1–0.3.
+**Handoff:** Plan approved (capacity (a), LLM-judge matching). Frontier team starts tasks 0.1–0.3 this week.
