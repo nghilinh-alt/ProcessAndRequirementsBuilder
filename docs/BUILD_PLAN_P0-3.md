@@ -12,9 +12,9 @@ This plan covers everything up to and including the **single-agent baseline (MAM
 
 | Phase | What you end up with | Est. hours | Target finish | R&D type |
 |---|---|---|---|---|
-| 0 | Timesheet, prior-knowledge search, Python project skeleton | 6 | 17 Nov | Supporting / admin |
-| 1 | Schemas, ID rules, SQLite trace store, logged LLM wrapper | 12 | 1 Dec | Supporting |
-| 2 | 3 gold-standard cases + scoring harness | 19 | 22 Dec | Supporting |
+| 0 | Timesheet, prior-knowledge search, Python project skeleton | 6 | 8 Nov | Supporting / admin |
+| 1 | Schemas, ID rules, SQLite trace store, logged LLM wrapper | 12 | 29 Nov | Supporting |
+| 2 | 3 gold-standard cases + scoring harness | 19 | 20 Dec | Supporting |
 | 3 | Baseline runs, scored report, MAMO-RT-01 log | 6 | 31 Dec 2026 | **Core** |
 | | **Total** | **~43** | | |
 
@@ -22,21 +22,38 @@ This plan covers everything up to and including the **single-agent baseline (MAM
 
 The claim starts in **Nov 2026**; Aug–Oct 2026 work is not claimed (decided 4 Nov 2026). Phases 0–3 need ~43 hrs, leaving ~5 hrs of slack in the ~48 available at 6 hrs/week. At Linh's $70/hr rate, the FY26-27 $30k budget needs ~329 director hrs, so ~286 in Jan–Jun 2027 (**~11 hrs/week**). The $20k eligibility floor needs ~186 hrs, so ~143 in Jan–Jun (**~5.5 hrs/week**). The R&D plan §5.1 has the breakdown. Phase 4–7 plans will be sized to real experimental work, not to the dollar target.
 
+## Week-by-week schedule (start Wed 4 Nov 2026)
+
+| Week | Tasks | Hrs |
+|---|---|---|
+| 4–8 Nov | 0.1 timesheet (today), 0.2 prior-knowledge search, 0.3 Python skeleton → **Phase 0 done** | 6 |
+| 9–15 Nov | 1.1 schemas, 1.2 ID rules + canonicaliser | 5 |
+| 16–22 Nov | 1.3 trace store, 1.4 LLM wrapper | 6 |
+| 23–29 Nov | 1.5 mini fixture → **Phase 1 done**; 2.1 gold format; start 2.2 insurance case | 6 |
+| 30 Nov–6 Dec | Finish 2.2; 2.3 app-dev case | 5 |
+| 7–13 Dec | 2.4 retail case; 2.5 matcher | 5.5 |
+| 14–20 Dec | Re-review insurance gold (≥1 week gap); 2.6 metrics, 2.7 score CLI → **Phase 2 done**; 3.1 baseline agent | 5 |
+| 21–27 Dec | Re-review transfer gold; 3.2 baseline runs; 3.3 judge spot-check (light week) | 2.5 |
+| 28–31 Dec | 3.4 MAMO-RT-01 log → **Phase 3 done** | 2 |
+| | **Total** (≈5 hrs spare in the ~48 available, for slippage) | **43** |
+
+Christmas weeks are planned light on purpose. If an earlier week slips, use the spare there first, then let 3.4 move to the first days of Jan 2027.
+
 ---
 
-## Phase 0 — Records, skeleton, prior knowledge (4–17 Nov)
+## Phase 0 — Records, skeleton, prior knowledge (4–8 Nov)
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
 | 0.1 | **Timesheet**: create `admin/` outside the repo (or a spreadsheet) with columns *date, hours, phase, task #, experiment ref, R&D type, mode (own work / with Claude), what was worked out*. Start logging today. | 0.5 | First entry made |
 | 0.2 | **Prior-knowledge search** (R&D plan §3): academic, commercial tools, open-source. Write dated notes to `research/prior_knowledge_2026-11.md`: what each source does, what it doesn't, and the remaining gap. | 4 | Notes committed; any narrowing of H1–H5 recorded |
-| 0.3 | **Python skeleton**: `pyproject.toml` (Python 3.12, pydantic, pytest, ruff), `src/mamo/__init__.py`, `tests/`, a `make test` or `pytest` that passes on an empty test. `.env.example` with `ANTHROPIC_API_KEY=`. | 1.5 | `pytest` green; pushed |
+| 0.3 | **Python skeleton**: `pyproject.toml` (Python 3.12+, pydantic, pytest, ruff), `src/mamo/__init__.py`, `tests/`, a `make test` or `pytest` that passes on an empty test. `.env.example` with `ANTHROPIC_API_KEY=`. | 1.5 | `pytest` green; pushed |
 
 > **Note:** GitHub branch protection on a *private personal* repo needs a paid GitHub plan. Without one, stick to a working rule instead: do experiment work on `exp/…` branches and merge to `main` only once the log entry is written.
 
 ---
 
-## Phase 1 — Schemas, store, LLM wrapper (18 Nov – 1 Dec)
+## Phase 1 — Schemas, store, LLM wrapper (9–29 Nov)
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
@@ -48,7 +65,7 @@ The claim starts in **Nov 2026**; Aug–Oct 2026 work is not claimed (decided 4 
 
 ---
 
-## Phase 2 — Gold standards + scoring harness (2–22 Dec)
+## Phase 2 — Gold standards + scoring harness (23 Nov – 20 Dec)
 
 ### 2A. Gold-standard cases
 
@@ -90,7 +107,7 @@ The tricky part: the engine will never word a requirement exactly the way the go
 
 ---
 
-## Phase 3 — Baseline, MAMO-RT-01 (23–31 Dec 2026)
+## Phase 3 — Baseline, MAMO-RT-01 (14–31 Dec 2026)
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|

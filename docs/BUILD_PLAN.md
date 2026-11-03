@@ -105,7 +105,7 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 
 ## 4. Tech stack (confirmed 4 Nov 2026)
 
-- **Language:** Python 3.12, Pydantic for schemas, pytest.
+- **Language:** Python 3.12+ (Linh's machine: 3.14), Pydantic for schemas, pytest. Record the exact Python version in each run log.
 - **Models:** Claude API primary; provider wrapper so OpenAI can be swapped in for comparison.
 - **Orchestration:** thin in-house orchestrator first (stages as functions over the store). Bring in a framework only if an experiment needs it; FY25-26 notes on crewAI/AutoGen state issues are the reason not to start there.
 - **Store:** SQLite → Postgres only if needed.
