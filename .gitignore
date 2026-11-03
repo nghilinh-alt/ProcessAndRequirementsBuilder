@@ -1,0 +1,15 @@
+# Secrets
+.env
+*.key
+
+# Client material never lives here
+clients/
+inputs/
+outputs/
+
+# Run artefacts
+runs/
+*.sqlite
+*.db
+__pycache__/
+.venv/
