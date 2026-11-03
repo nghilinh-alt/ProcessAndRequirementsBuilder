@@ -1,0 +1,30 @@
+[project]
+name = "mamo"
+version = "0.0.1"
+description = "MAMO engine: agent-led traceable process and requirements builder (Rogue Night Pty Ltd)"
+requires-python = ">=3.12"
+license = { text = "Proprietary. Copyright Rogue Night Pty Ltd. All rights reserved." }
+authors = [{ name = "Rogue Night Pty Ltd" }]
+dependencies = [
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "anthropic>=0.40",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

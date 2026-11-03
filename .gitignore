@@ -13,3 +13,6 @@ runs/
 *.db
 __pycache__/
 .venv/
+.pytest_cache/
+*.egg-info/
+.ruff_cache/
