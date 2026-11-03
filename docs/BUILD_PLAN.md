@@ -1,7 +1,7 @@
 # MAMO Engine — Build Plan
 
 **Owner:** Rogue Night Pty Ltd (Linh Nghi, director)
-**Prepared:** 4 Nov 2026 · **Status:** DRAFT for Linh's review
+**Prepared:** 4 Nov 2026 · **Status:** Approved by Linh Nghi, 4 Nov 2026
 **Horizon:** Nov 2026 – Jun 2027 (engine v1), then client-ready packaging
 
 ---
@@ -34,11 +34,11 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 
 ## 2. Phases
 
-### Phase 0 — Repo, records and Round 0 write-up (Nov 2026, week 1–2)
-- Create this repo; protect `main`; one branch per experiment (`exp/MAMO-RT-0X`).
-- Write the Round 0 summary (Aug–Oct 2026) **from existing evidence only**, labelled "written Nov 2026".
+### Phase 0 — Repo, records and prior-knowledge search (Nov 2026, week 1–2)
+- ~~Create this repo~~ Done 4 Nov 2026. Protect `main`; one branch per experiment (`exp/MAMO-RT-0X`).
+- Prior-knowledge search, dated Nov 2026. (Aug–Oct 2026 work is background only and not claimed; the claim starts Nov 2026.)
 - Set up the timesheet and experiment log (`experiments/`).
-- **Exit:** repo live, Round 0 note committed, log template in use.
+- **Exit:** repo live, prior-knowledge notes committed, log template in use.
 
 ### Phase 1 — Core schemas and trace-graph store (Nov 2026)
 - Define typed artefacts: `Problem`, `Capability`, `Process`, `Step`, `Requirement`, `TraceLink`, `Run`.
@@ -93,7 +93,7 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 
 | Date | Milestone |
 |---|---|
-| mid-Nov 2026 | Repo live, Round 0 note, schemas drafted |
+| mid-Nov 2026 | Repo live, prior-knowledge notes, schemas drafted |
 | end-Dec 2026 | Benchmarks + scoring harness + baseline report |
 | end-Feb 2027 | Pipeline + verifier results (H1/H2) |
 | end-Mar 2027 | State design result (H3) |
@@ -103,7 +103,7 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 
 ---
 
-## 4. Tech stack (proposed — confirm)
+## 4. Tech stack (confirmed 4 Nov 2026)
 
 - **Language:** Python 3.12, Pydantic for schemas, pytest.
 - **Models:** Claude API primary; provider wrapper so OpenAI can be swapped in for comparison.
@@ -119,17 +119,21 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 | Risk | Mitigation |
 |---|---|
 | Client IP or data leaks into the engine | Data policy, `.gitignore` on `clients/`, pre-commit check for client names |
-| Gold standards are too easy or biased | Optional external BA validation; hidden transfer sets |
+| Gold standards are too easy or biased (Linh is both builder and BA) | Write acceptance rules for each case before running the engine; re-review each gold standard after a gap of at least a week; keep transfer sets hidden during tuning |
 | Existing tool already solves traceability | Prior-knowledge search (Nov 2026); narrow scope to what's still unknown |
 | Token cost of repeat runs | Budget per experiment; cache identical calls; use smaller models for baselines |
 | Scope creep into UI/product polish | Phase 8 only; keep it out of experiment branches |
 
 ---
 
-## 6. Open decisions for Linh
+## 6. Decisions (confirmed by Linh, 4 Nov 2026)
 
-1. Confirm stack (section 4).
-2. Repo name and GitHub owner (personal account or a `rogue-night` organisation; an org is better for client reuse and later hires).
-3. Visibility: **private** recommended.
-4. Licence: proprietary/all-rights-reserved (default here) unless you plan to open-source parts.
-5. Whether to bring in an external BA to validate the benchmark gold standards.
+| # | Decision | Outcome |
+|---|---|---|
+| 1 | Tech stack | Confirmed as in section 4 |
+| 2 | GitHub owner / repo | `nghilinh-alt/ProcessAndRequirementsBuilder` (personal account for now); move to a Rogue Night GitHub organisation once the product is more polished |
+| 3 | Visibility | Private |
+| 4 | Licence | Proprietary, all rights reserved (Rogue Night Pty Ltd) |
+| 5 | Gold-standard validation | No external BA. Linh Nghi is the BA and builds and validates the gold standards |
+
+When the repo moves to the Rogue Night organisation, use GitHub's *Transfer ownership* so the commit history (the experiment evidence) moves with it intact.

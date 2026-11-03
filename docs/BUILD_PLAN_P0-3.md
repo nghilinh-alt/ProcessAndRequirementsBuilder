@@ -12,15 +12,15 @@ This plan covers everything up to and including the **single-agent baseline (MAM
 
 | Phase | What you end up with | Est. hours | Target finish | R&D type |
 |---|---|---|---|---|
-| 0 | Records in order, Python project skeleton, prior-knowledge search | 11 | 17 Nov | Supporting / admin |
+| 0 | Timesheet, prior-knowledge search, Python project skeleton | 6 | 17 Nov | Supporting / admin |
 | 1 | Schemas, ID rules, SQLite trace store, logged LLM wrapper | 12 | 1 Dec | Supporting |
 | 2 | 3 gold-standard cases + scoring harness | 19 | 22 Dec | Supporting |
 | 3 | Baseline runs, scored report, MAMO-RT-01 log | 6 | 31 Dec 2026 | **Core** |
-| | **Total** | **~48** | | |
+| | **Total** | **~43** | | |
 
 **Capacity (decided 4 Nov 2026):** option (a), ~6 hrs/week, so the baseline lands by **31 Dec 2026**. The hours count all R&D work on these tasks, including Linh's own thinking, sketching and planning done outside Claude sessions, as long as it's logged (see "Logging your own time" below).
 
-At ~6 hrs/week the plan uses ~48 of ~220 budgeted FY26-27 hours by end-Dec. That leaves ~170 for Jan–Jun 2027, less whatever Round 0 (Aug–Oct) is shown to have used.
+The claim starts in **Nov 2026**; Aug–Oct 2026 work is not claimed (decided 4 Nov 2026). Phases 0–3 need ~43 hrs, leaving ~5 hrs of slack in the ~48 available at 6 hrs/week. At Linh's $70/hr rate, the FY26-27 $30k budget needs ~329 director hrs, so ~286 in Jan–Jun 2027 (**~11 hrs/week**). The $20k eligibility floor needs ~186 hrs, so ~143 in Jan–Jun (**~5.5 hrs/week**). The R&D plan §5.1 has the breakdown. Phase 4–7 plans will be sized to real experimental work, not to the dollar target.
 
 ---
 
@@ -29,10 +29,8 @@ At ~6 hrs/week the plan uses ~48 of ~220 budgeted FY26-27 hours by end-Dec. That
 | # | Task | Hrs | Done when |
 |---|---|---|---|
 | 0.1 | **Timesheet**: create `admin/` outside the repo (or a spreadsheet) with columns *date, hours, phase, task #, experiment ref, R&D type, mode (own work / with Claude), what was worked out*. Start logging today. | 0.5 | First entry made |
-| 0.2 | **Aug–Oct evidence export**: list the commits, chats and files from Round 0 with their dates. Store the list (not client material) in `experiments/round0_evidence.md`. | 2 | List committed |
-| 0.3 | **Round 0 write-up**: `experiments/MAMO-RT-00_round0.md`, using the log template. Label it "written 4–17 Nov 2026 from evidence listed in round0_evidence.md". Record what was tried, what failed (lost links, duplicates, invented requirements) and how that led to H1–H5. | 3 | Committed |
-| 0.4 | **Prior-knowledge search** (R&D plan §3): academic, commercial tools, open-source. Write dated notes to `research/prior_knowledge_2026-11.md`: what each source does, what it doesn't, and the remaining gap. | 4 | Notes committed; any narrowing of H1–H5 recorded |
-| 0.5 | **Python skeleton**: `pyproject.toml` (Python 3.12, pydantic, pytest, ruff), `src/mamo/__init__.py`, `tests/`, a `make test` or `pytest` that passes on an empty test. `.env.example` with `ANTHROPIC_API_KEY=`. | 1.5 | `pytest` green; pushed |
+| 0.2 | **Prior-knowledge search** (R&D plan §3): academic, commercial tools, open-source. Write dated notes to `research/prior_knowledge_2026-11.md`: what each source does, what it doesn't, and the remaining gap. | 4 | Notes committed; any narrowing of H1–H5 recorded |
+| 0.3 | **Python skeleton**: `pyproject.toml` (Python 3.12, pydantic, pytest, ruff), `src/mamo/__init__.py`, `tests/`, a `make test` or `pytest` that passes on an empty test. `.env.example` with `ANTHROPIC_API_KEY=`. | 1.5 | `pytest` green; pushed |
 
 > **Note:** GitHub branch protection on a *private personal* repo needs a paid GitHub plan. Without one, stick to a working rule instead: do experiment work on `exp/…` branches and merge to `main` only once the log entry is written.
 
@@ -109,7 +107,7 @@ The tricky part: the engine will never word a requirement exactly the way the go
 
 | When | Decision | Default if you don't decide |
 |---|---|---|
-| 0.4 | Do any prior-knowledge findings narrow H1–H5? | Keep H1–H5 as is |
+| 0.2 | Do any prior-knowledge findings narrow H1–H5? | Keep H1–H5 as is |
 | 1.4 | Which Claude model for engine runs vs the judge | Same mid-tier model for both; record the model ID in every run |
 | 2B | ~~Accept LLM-judge matching (with spot-checks)~~ | Confirmed 4 Nov 2026 |
 | 3.4 | Is the baseline already near target? If so, the benchmark may be too easy | Re-review the gold standards before Phase 4 |

@@ -23,7 +23,7 @@ Owned by Rogue Night Pty Ltd. Proprietary, all rights reserved. This repo holds 
 
 ## Status
 
-Plan approved 4 Nov 2026. Repo: `nghilinh-alt/ProcessAndRequirementsBuilder` (private; moves to a Rogue Night organisation later). Round 0 prototyping happened Aug–Oct 2026; the structured build starts with the benchmark and baseline in Nov–Dec 2026.
+Plan approved 4 Nov 2026. Repo: `nghilinh-alt/ProcessAndRequirementsBuilder` (private; moves to a Rogue Night organisation later). The structured build starts in Nov 2026 (earlier informal prototyping is background only), with the benchmark and baseline in Nov–Dec 2026.
 
 ## Ground rules
 
