@@ -24,6 +24,7 @@ Each agent **reads only the nodes it needs** from the store and **writes typed n
 | Capability | Problem nodes | `Capability` nodes + `problem→capability` links |
 | Process | Capabilities | `Process`/`Step` nodes + `capability→process` links |
 | Requirements | Processes/Steps | `Requirement` nodes (F/NFR) + `process→requirement` links |
+| Impact (Phase 8, H6) | A changed rule or process + the graph | The set of affected downstream processes, rules and requirements, each with its trace path |
 | Verifier | One link + both endpoints + source span | `verified`, `confidence`, reason; flags invented, missing or merged links |
 | Canonicaliser | Whole graph | Stable IDs, deduped requirements, sorted output (for repeatability) |
 

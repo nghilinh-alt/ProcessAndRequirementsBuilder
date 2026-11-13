@@ -11,22 +11,24 @@
 A reusable engine Rogue Night can point at any client's business problem and get back:
 
 - a structured problem statement and capability map
-- business processes (steps, actors, inputs/outputs)
+- a multi-level business process hierarchy (L2 → L3 → L4) with actors, inputs/outputs and business rules
 - requirements with stable IDs (functional + non-functional)
-- a trace matrix linking every requirement to its process, capability and source text
+- a trace matrix linking every requirement to its rule, process, capability and source text, traceable forwards and backwards
+- a change-impact view: what a changed rule or process affects downstream
 - a confidence/verification report showing which links were checked and which need a human
 
-Targets come from the FY26-27 R&D plan (H1–H5) and act as the engine's quality bar:
+Targets come from the FY26-27 R&D plan (H1–H6) and act as the engine's quality bar:
 
 | Measure | Target |
 |---|---|
 | Coverage of gold-standard requirements | ≥ 85% |
 | Invalid / duplicate requirements | ≤ 10% |
-| Trace-link precision / recall | ≥ 90% / ≥ 85% |
+| Trace-link precision / recall (all levels incl. rules) | ≥ 90% / ≥ 85% |
 | Orphan requirements | < 5% |
 | Token use per stage | roughly flat across stages |
 | Run-to-run agreement (5 runs) | ≥ 90% |
 | Accuracy drop on an unseen domain | ≤ 10 pts |
+| Change-impact recall / precision | ≥ 90% / ≥ 85% (proposed) |
 
 These are *hypotheses*, not promises. The plan is built so that missing a target produces a logged finding and a design change, not a dead end.
 
@@ -41,14 +43,15 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 - **Exit:** repo live, prior-knowledge notes committed, log template in use.
 
 ### Phase 1 — Core schemas and trace-graph store (Nov 2026)
-- Define typed artefacts: `Problem`, `Capability`, `Process`, `Step`, `Requirement`, `TraceLink`, `Run`.
+- Define typed artefacts: `Problem`, `Capability`, `Process`, `Step`, `Requirement`, `TraceLink`, `Run` (done 14 Nov 2026).
+- Extend for the narrowed H3 (14 Nov 2026): process levels L2–L4, `BusinessRule`, and the link kinds between them.
 - ID rules (for example `CAP-001`, `PRC-003.2`, `REQ-F-014`) and a canonicalisation function.
 - Store: SQLite to start (nodes, links, runs, token_usage tables). Swap later only if experiments show a need.
 - **Exit:** schemas validated by tests; store can round-trip a hand-made case.
 
 ### Phase 2 — Benchmarks and scoring harness (Nov–Dec 2026)
 - Three Rogue Night-built cases (no client data): synthetic insurance claims finance (benchmark), app product development (transfer A), small retail (transfer B).
-- Each: problem text, expert processes, requirements, trace matrix.
+- Each: problem text, expert L2–L4 process hierarchy, business rules, requirements, trace matrix.
 - Scoring scripts: coverage, invalid/duplicate rate, link precision/recall, orphans, tokens, latency, $/run, run-to-run agreement.
 - Transfer-domain gold standards kept in a locked folder, not read during tuning.
 - **Exit:** `score` command produces a metrics report for any run.
@@ -73,19 +76,25 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 - 5 runs per case per setting; measure agreement.
 - **Exit:** H4 result logged; default control profile chosen.
 
-### Phase 7 — Cross-domain transfer (Apr–Jun 2027)
+### Phase 7 — Cross-domain transfer (Apr–May 2027)
 - Freeze the pipeline. Run on app-dev and retail cases. Unlock their gold standards only for scoring.
 - Failure analysis by stage and cause.
 - **Exit:** H5 result logged; list of domain-specific failure types → domain-pack design.
 
-### Phase 8 — Client packaging (Jul 2027 onward, *not R&D*)
+### Phase 8 — Change-impact analysis (May–Jun 2027)
+- Gold change scenarios: 3–5 per case (a changed rule or process + every affected item), written before the engine runs on them.
+- Impact agent walks the trace graph downstream from the changed item; compare its set with the gold set.
+- For every miss or false flag, record whether the cause was a wrong link or wrong impact reasoning.
+- **Exit:** H6 result logged.
+
+### Phase 9 — Client packaging (Jul 2027 onward, *not R&D*)
 - CLI + simple config to run on a client problem.
 - Exporters: Markdown BRD, CSV/XLSX trace matrix, optional Airtable push.
 - Domain-pack format (glossary, typical actors, NFR checklist) so new industries are config, not code.
 - Human review step: verifier flags low-confidence links for a BA to accept/reject.
 - **Exit:** first paid engagement delivered from a separate client workspace.
 
-> Phases 3–7 are the experimental work. Phases 0–2 are supporting. Phase 8 and all client delivery are ordinary commercial work. Keep hours and costs tagged by phase so the split is easy later.
+> Phases 3–8 are the experimental work. Phases 0–2 are supporting. Phase 9 and all client delivery are ordinary commercial work. Keep hours and costs tagged by phase so the split is easy later.
 
 ---
 
@@ -98,7 +107,8 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 | end-Feb 2027 | Pipeline + verifier results (H1/H2) |
 | end-Mar 2027 | State design result (H3) |
 | end-Apr 2027 | Repeatability result (H4) |
-| end-Jun 2027 | Transfer result (H5); engine v1 frozen |
+| end-May 2027 | Transfer result (H5) |
+| end-Jun 2027 | Change-impact result (H6); engine v1 frozen |
 | Q3 2027 | Client-ready package (v1.0) |
 
 ---
@@ -122,7 +132,7 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 | Gold standards are too easy or biased (Linh is both builder and BA) | Write acceptance rules for each case before running the engine; re-review each gold standard after a gap of at least a week; keep transfer sets hidden during tuning |
 | Existing tool already solves traceability | Prior-knowledge search (Nov 2026); narrow scope to what's still unknown |
 | Token cost of repeat runs | Budget per experiment; cache identical calls; use smaller models for baselines |
-| Scope creep into UI/product polish | Phase 8 only; keep it out of experiment branches |
+| Scope creep into UI/product polish | Phase 9 only; keep it out of experiment branches |
 
 ---
 

@@ -1,7 +1,7 @@
 # Prior-knowledge search — November 2026
 
 **Task:** 0.2 (BUILD_PLAN_P0-3) · R&D plan §3
-**Search date:** 4 Nov 2026. Compiled with Claude (web search); **reviewed by Linh Nghi on: 10 Nov 2026
+**Search date:** 4 Nov 2026. Compiled with Claude (web search); **reviewed by Linh Nghi on: 14 Nov 2026
 **Purpose:** check whether a competent professional could already know how to do what H1–H5 test, and narrow the hypotheses to what is still unknown.
 
 ---
