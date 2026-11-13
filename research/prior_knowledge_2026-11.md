@@ -1,7 +1,7 @@
 # Prior-knowledge search — November 2026
 
 **Task:** 0.2 (BUILD_PLAN_P0-3) · R&D plan §3
-**Search date:** 4 Nov 2026. Compiled with Claude (web search); **reviewed by Linh Nghi on: ____** (add the date when reviewed and add your own judgement below)
+**Search date:** 4 Nov 2026. Compiled with Claude (web search); **reviewed by Linh Nghi on: 10 Nov 2026
 **Purpose:** check whether a competent professional could already know how to do what H1–H5 test, and narrow the hypotheses to what is still unknown.
 
 ---
@@ -66,3 +66,27 @@ One finding **narrows H3** (see §4): TraceDev already uses a trace graph as com
 - [ ] Check contextgit and requirements-to-test-agent.
 - [ ] Link the FY25-26 searches (crewAI/AutoGen state issues) with their original dates.
 - [ ] Optional: ask 1–2 BA/RE practitioners whether a known method exists, and record the date and answer.
+
+
+## 7. Linh's review (14 Nov 2026)
+
+**What TraceDev / UserTrace already solve that overlaps with MAMO:**
+
+* Automatically map and maintain **traceability links** between natural-language requirements, system design models (such as UML diagrams), and downstream implementation artifacts.
+* Use **multi-agent collaborative workflows** (such as specialized Refiner, Designer, and Validator roles) to clarify vague user inputs, enforce semantic consistency, and iteratively fix gaps via closed-loop feedback.
+* Bridge high-level business intent/use cases with structured technical specifications to ensure downstream outputs align with initial functional requirements.
+
+**What they don't do that MAMO tests:**
+
+* **Hierarchical Enterprise Process Decomposition:** TraceDev and UserTrace focus on translating software requirements into code/UML, whereas MAMO tests multi-tier business process mapping (e.g., decomposing end-to-end value streams down through Level 2, Level 3, and Level 4 enterprise process hierarchies) alongside business rules and capability models.
+* **BA Governance, Sign-Off, and Non-Code Artifacts:** They validate against executable code and standard open-source software benchmarks, not real-world enterprise BA deliverables (such as operating model designs, business capability uplifts, compliance/regulatory rule traceability, and stakeholder-ready process documentation).
+* **Cross-Artifact Impact Analysis Across Business & IT:** They do not test how changing a single business rule or policy constraint cascades across multi-level process maps, functional requirements, and solution architecture boundaries simultaneously.
+
+**Could a competent BA/engineer know the H1–H5 outcomes in advance from this work? Why / why not:**
+
+* **No.** While a competent BA or engineer would know from existing literature that multi-agent feedback loops improve generic code-to-requirement traceability on standard software benchmarks (like ETOUR or SMOS), **they could not know the H1–H5 outcomes in advance**.
+* Existing studies only test flat software engineering tasks with clear code-level ground truth. They provide no empirical evidence on whether multi-agent LLM pipelines can maintain structural integrity, eliminate hallucinated process steps, and enforce strict parent-child traceability across complex, multi-level enterprise process hierarchies (L2–L4) and ambiguous real-world business requirements.
+
+**Decision on H3:**
+
+Narrow H3 to focus on the specific problem existing research hasn't solved yet: keeping multi-level business processes (L2–L4), business rules, and requirements accurately linked in both directions, rather than just matching basic requirements to code.
