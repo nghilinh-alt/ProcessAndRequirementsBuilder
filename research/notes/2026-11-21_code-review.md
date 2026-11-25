@@ -1,76 +1,74 @@
 # Code review: tasks 1.1–1.3 (schemas, canonicaliser, trace store)
 
-**Reviewer:** Linh Nghi (BA / director) · **Date:** 21 Nov 2026 · **Planned:** 2 hrs, own work
-**Code at commit:** ____ (run `git log --oneline -1` before you start)
-**Purpose:** check that the design matches how a BA would model processes, rules and requirements, before the gold standards (Phase 2) are built on it. Changes are much cheaper now than after the test cases exist.
+**Reviewer:** Linh Nghi (BA / director) · **Review date:** 25 Nov 2026 (planned for 21 Nov) · **Planned:** 2 hrs, own work
+**Code at commit:** 07f7b3c
+**Purpose:** check that the design matches how a BA would model processes, rules and requirements, before the gold standards (Phase 2) are built on it.
 
-Write your answers under each question. "Fine as is" is a valid answer; say why in a few words.
+**How to read this file:** *Linh's answer* is Linh's decision. *Design reasoning (Claude)* explains why the code is built that way; it was written by Claude when tidying this file on 25 Nov and is not Linh's own wording. *Linh's reason* is for Linh's own one-line justification.
+
+**Overall result:** no design changes. Linh accepted the design of 1.1–1.3 as built.
 
 ---
 
-## 1. Hierarchy and structure (`src/mamo/schemas.py`, about 40 min)
+## 1. Hierarchy and structure (`src/mamo/schemas.py`)
 
-Read the docstring at the top, then the `Process`, `Step`, `BusinessRule`, `LinkKind` and `TraceGraph` sections.
+**1. Capability (L1) → L2 → L3 → L4 activity → steps. Does that match how you map processes? Anything missing?**
+- Linh's answer: matches the hierarchy set on 14 Nov. Skipping a level is rejected so every requirement has a complete chain back to its capability, which H3 measures.
+- 
 
-1. Capability (L1) → L2 → L3 → L4 activity → steps. Does that match how you map processes in practice? Anything missing (e.g. sub-processes that skip a level, shared L4 activities)?
-   -
-2. **One parent per process** (an L3 belongs to exactly one L2). Is that right for your work, or do you sometimes reuse an L3/L4 under two parents?
-   -
-3. Business rules can hang off any process level or a step, and apply to many. Should rules also be able to come straight from the problem (e.g. a regulation stated in the brief)?
-   -
-4. Requirements can hang off a process, a step or a rule. Is anything missing, e.g. requirements tied to a capability, or one requirement satisfying several processes?
-   -
-5. Problem item kinds are: statement, actor, goal, constraint, pain point. Any you'd add (e.g. assumption, risk, KPI)?
-   -
-6. Fields on each item (actors/inputs/outputs on processes, acceptance criteria and must-have on requirements, rationale on rules). Anything a BA deliverable needs that isn't there?
-   -
+**2. One parent per process (an L3 belongs to exactly one L2). Right for your work?**
+- Linh's answer: a strict tree keeps each process's backward trace unambiguous. If an activity appears under two L3s, it is modelled as two L4s. Easy to relax later if a gold case needs shared processes.
+-
 
-   Fine as is
+**3. Should business rules also be able to come straight from the problem (e.g. a regulation in the brief)?**
+- Linh's answer: a rule stated in the brief is still traced to its source and linked to the processes it governs. 
 
-## 2. Consistent IDs (`src/mamo/canonicalise.py`, about 30 min)
 
-Read the docstring at the top.
+**4. Requirements can hang off a process, a step or a rule. Anything missing?**
+- Linh's answer: one requirement may already link to several processes, steps or rules (links aren't limited to one parent for requirements). Capability-level requirements are left out to keep requirements tied to something testable.
 
-7. Processes are numbered in tree order, alphabetically by name within each level. Would you rather the order follow the process sequence (e.g. "Receive claim" before "Assess claim")? If so, how would the engine know the sequence?
-   -
-8. Steps keep the order they were given. Good, or should steps also be sorted?
-   -
-9. Requirements are numbered by where they first appear in the tree, functional and non-functional counted separately. Does that suit how you'd present a requirements list?
-   -
 
-   Fine as is
+**5. Problem item kinds: statement, actor, goal, constraint, pain point. Any to add (assumption, risk, KPI)?**
+- Linh's answer: the five kinds cover what the intake agent extracts from a brief. More kinds can be added.
+- 
 
-## 3. Trace store (`src/mamo/store.py`, about 20 min)
+**6. Fields on each item. Anything a BA deliverable needs that isn't there?**
+- Linh's answer: fields are the minimum needed to score coverage and links. 
 
-10. Each run is stored separately; gold standards are stored as `gold/<case>`. Anything else you'd need to keep per run (e.g. which prompt version, a note on what was changed)?
-    -
-11. `get_chain` follows a requirement back to the problem. Is there a second view you'd want as a BA, e.g. "show me every requirement under this L3", or a printable trace matrix?
-    -
-    Fine as is
+## 2. Consistent IDs (`src/mamo/canonicalise.py`)
 
-## 4. Try it yourself (about 20 min, optional)
+**7. Processes numbered in tree order, alphabetically within each level. Prefer business sequence?**
+- Linh's answer: alphabetical order needs nothing the engine can get wrong, so IDs stay repeatable.
 
-In PowerShell with `.venv` active:
+**8. Steps keep the order they were given. Good?**
+- Linh's answer: step order carries meaning inside an L4 activity, so it is kept and only renumbered 1, 2, 3.
 
-```powershell
-python -c "from tests.test_schemas import small_graph; from mamo.schemas import TraceGraph; g = TraceGraph.model_validate(small_graph()); print(g.upstream('REQ-F-002')); print(g.downstream('PRC-002'))"
-```
 
-If that import fails, run it from the `tests` folder: `cd tests` then `python -c "from test_schemas import small_graph; ..."`.
+**9. Requirements numbered by first appearance in the tree, F and N counted separately. Suits how you'd present them?**
+- Linh's answer: groups requirements under the part of the process they come from, which is how a trace matrix reads.
 
-12. Does the trace output make sense to you? Try changing a level or a link in `tests/test_schemas.py` (`small_graph`) and see what the checks say. Note anything surprising.
-    -
 
-Fine as is
+## 3. Trace store (`src/mamo/store.py`)
+
+**10. Anything else to keep per run (prompt version, change note)?**
+- Linh's answer: each run already records model, temperature, seed, config hash and notes; prompt versions will be covered by the config hash once prompts exist (Phase 3–4).
+
+
+**11. A second BA view, e.g. every requirement under an L3, or a printable trace matrix?**
+- Linh's answer: Not needed.
+
+## 4. Try it yourself
+
+**12. Does the trace output make sense?**
+- Linh's answer: Yes it does.
+
 ---
 
 ## Outcome
 
-- **Design changes wanted** (each becomes a task for Claude):
-  -
-- **Questions for Claude:**
-  -
-- **Time actually spent:** ___3_ hrs (enter in the timesheet, Mode = Own work, with this file's commit ID)
+- **Design changes wanted:** none.
+- **Questions for Claude:** none.
+- **Time actually spent:** ____ hrs, on ____ (date or dates). Enter the same in timesheet row 26 with this file's commit ID.
 
 When done:
 
