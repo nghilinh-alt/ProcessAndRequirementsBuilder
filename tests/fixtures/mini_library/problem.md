@@ -1,0 +1,1 @@
+The community library rents out two meeting rooms. Bookings are taken by phone and written in a paper diary, and rooms are often double-booked. Members want to book rooms online and get a confirmation straight away. Only members whose annual fee is paid can book a room. Staff also struggle to keep track of who has renewed their membership.

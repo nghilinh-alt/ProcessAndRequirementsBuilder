@@ -1,0 +1,165 @@
+# Mini test case: community library room bookings (task 1.5).
+# Made-up and unrelated to the benchmark domains. IDs are canonical (canonicalise() leaves them unchanged).
+# Problem text: problem.md; every `source` span points into it exactly.
+problems:
+- id: PRB-001
+  kind: pain_point
+  text: rooms are often double-booked
+  source:
+    start: 113
+    end: 142
+- id: PRB-002
+  kind: goal
+  text: Members want to book rooms online and get a confirmation straight away
+  source:
+    start: 144
+    end: 214
+- id: PRB-003
+  kind: constraint
+  text: Only members whose annual fee is paid can book a room
+  source:
+    start: 216
+    end: 269
+- id: PRB-004
+  kind: pain_point
+  text: Staff also struggle to keep track of who has renewed their membership
+  source:
+    start: 271
+    end: 340
+capabilities:
+- id: CAP-001
+  name: Membership management
+- id: CAP-002
+  name: Room booking management
+processes:
+- id: PRC-001
+  level: 2
+  name: Manage memberships
+- id: PRC-002
+  level: 3
+  name: Renew a membership
+  actors:
+  - Member
+  - Library staff
+- id: PRC-003
+  level: 4
+  name: Record the fee payment
+  actors:
+  - Library staff
+  inputs:
+  - Fee payment
+  outputs:
+  - Updated membership expiry date
+- id: PRC-004
+  level: 2
+  name: Manage room bookings
+- id: PRC-005
+  level: 3
+  name: Take a booking
+  actors:
+  - Member
+- id: PRC-006
+  level: 4
+  name: Confirm a booking
+  actors:
+  - Member
+  - Booking system
+steps:
+- id: PRC-006.1
+  description: Check the room is free for the requested time
+- id: PRC-006.2
+  description: Check the member's fee is paid
+- id: PRC-006.3
+  description: Send the booking confirmation
+  actor: Booking system
+rules:
+- id: RUL-001
+  statement: Only members with a paid annual fee can book a room.
+  source:
+    start: 216
+    end: 269
+- id: RUL-002
+  statement: A room cannot have two bookings with overlapping times.
+  source:
+    start: 113
+    end: 142
+requirements:
+- id: REQ-F-001
+  kind: functional
+  statement: The system shall extend a membership's expiry date by one year when the fee payment is recorded.
+- id: REQ-F-002
+  kind: functional
+  statement: The system shall only accept bookings from members whose annual fee is paid.
+- id: REQ-F-003
+  kind: functional
+  statement: The system shall show whether a room is free for a requested date and time.
+  acceptance:
+  - Shows free/booked for any 30-minute slot in the next 90 days
+- id: REQ-F-004
+  kind: functional
+  statement: The system shall reject a booking that overlaps an existing booking for the same room.
+- id: REQ-F-005
+  kind: functional
+  statement: The system shall email the member a confirmation when a booking is accepted.
+- id: REQ-N-001
+  kind: non_functional
+  statement: Booking confirmations shall be sent within one minute of the booking being accepted.
+  must_have: false
+links:
+- from_id: PRB-001
+  to_id: CAP-002
+  kind: problem_capability
+- from_id: PRB-002
+  to_id: CAP-002
+  kind: problem_capability
+- from_id: PRB-003
+  to_id: CAP-001
+  kind: problem_capability
+- from_id: PRB-004
+  to_id: CAP-001
+  kind: problem_capability
+- from_id: CAP-001
+  to_id: PRC-001
+  kind: capability_process
+- from_id: CAP-002
+  to_id: PRC-004
+  kind: capability_process
+- from_id: PRC-001
+  to_id: PRC-002
+  kind: process_process
+- from_id: PRC-002
+  to_id: PRC-003
+  kind: process_process
+- from_id: PRC-004
+  to_id: PRC-005
+  kind: process_process
+- from_id: PRC-005
+  to_id: PRC-006
+  kind: process_process
+- from_id: PRC-003
+  to_id: RUL-001
+  kind: process_rule
+- from_id: PRC-006.1
+  to_id: RUL-002
+  kind: process_rule
+- from_id: PRC-006.2
+  to_id: RUL-001
+  kind: process_rule
+- from_id: PRC-003
+  to_id: REQ-F-001
+  kind: process_requirement
+- from_id: PRC-006
+  to_id: REQ-N-001
+  kind: process_requirement
+- from_id: PRC-006.1
+  to_id: REQ-F-003
+  kind: process_requirement
+- from_id: PRC-006.3
+  to_id: REQ-F-005
+  kind: process_requirement
+- from_id: RUL-001
+  to_id: REQ-F-002
+  kind: rule_requirement
+- from_id: RUL-002
+  to_id: REQ-F-004
+  kind: rule_requirement
