@@ -174,8 +174,8 @@ class Run(_Base):
     case: NonEmpty
     started_at: datetime
     model: NonEmpty
-    temperature: float = Field(ge=0.0)
-    seed: int | None = None
+    effort: Literal["low", "medium", "high", "xhigh", "max"] | None = None  # None = API default
+    seed: int | None = None  # only for our own randomness (e.g. sampling); the API has no seed
     config_hash: str = ""
     notes: str = ""
 

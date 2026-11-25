@@ -99,7 +99,7 @@ def test_unknown_run_raises(store):
 
 def test_run_record_round_trips(store):
     run = Run(id="run-001", case="insurance", started_at=datetime(2026, 12, 22, 10, 0), model="claude-x",
-              temperature=0.0, seed=7)
+              effort="medium", seed=7)
     store.add_run(run)
     assert store.get_run("run-001") == run
 

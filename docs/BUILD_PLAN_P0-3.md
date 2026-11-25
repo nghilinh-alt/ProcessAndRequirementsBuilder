@@ -62,7 +62,7 @@ If a week slips, let 3.4 (and if needed 3.2–3.3) move to the first week of Jan
 | 1.1b | **Schema extension for H3** (added 14 Nov 2026): process `level` (2, 3, 4) with parent-child links between levels, a `BusinessRule` node (`RUL-001`), and link kinds process → rule and rule → requirement. Graph methods to trace upstream and downstream from any node. **Decided by Linh, 14 Nov 2026:** capabilities are L1; hierarchy is Capability (L1) → L2 → L3 → L4 activity → steps; steps belong to L4 activities only (`PRC-012.3` = step 3 of L4 activity `PRC-012`); one business rule can apply to several processes (many-to-many links). | 2 | **Done 17 Nov 2026**: 37 schema tests; one parent per process; forward/backward tracing |
 | 1.2 | **ID rules + canonicaliser v0** (`canonicalise.py`): ID formats `CAP-001`, `PRC-003`, `PRC-003.2`, `RUL-001`, `REQ-F-014`, `REQ-N-003`. Function that renumbers IDs in a deterministic order and normalises whitespace in text (case kept; ignored only for sorting). | 2 | **Done 17 Nov 2026**: scrambled IDs + order → identical output; 46 tests total |
 | 1.3 | **Trace store** (`store.py`): SQLite tables `nodes`, `links`, `runs`, `llm_calls`. Functions: `add_node`, `add_link`, `get_nodes(type, run)`, `get_chain(req_id)` (requirement → process → capability → problem), `export_graph(run)`. | 3 | **Done 20 Nov 2026**: `store.py` (save/load whole graphs, add nodes/links one at a time, get_nodes, get_chain, run records; llm_calls table ready); 14 store tests, 60 total |
-| 1.4 | **LLM wrapper** (`llm.py`): one `call()` function over the Claude API. It logs model, prompt hash, temperature, tokens in/out, latency, cost and run ID into `llm_calls`, and supports structured output into a Pydantic schema. Provider is a setting so OpenAI can be added later. | 3 | A test call is logged with tokens and cost; a mocked test runs without a key |
+| 1.4 | **LLM wrapper** (`llm.py`): one `call()` function over the Claude API. It logs model, prompt hash, effort, tokens in/out, latency, cost and run ID into `llm_calls`, and supports structured output into a Pydantic schema. Provider is a setting so OpenAI can be added later. | 3 | **Built 25 Nov 2026**: `llm.py` (Sonnet 5.5 default, structured outputs, effort, cost table, logging to the store); 11 tests with a fake client, 71 total. **Live check pending** the API key (`python -m mamo.llm`) |
 | 1.5 | **Mini fixture**: a tiny made-up case (one problem, 2 capabilities, an L2 → L3 → L4 chain, 2 rules, 6 requirements) in `tests/fixtures/` for the tests above. | 1 | Used by tests 1.2 and 1.3 |
 
 ---
@@ -99,7 +99,7 @@ Write the **acceptance rules first**, then the gold standard, then leave it for 
 
 The tricky part: the engine will never word a requirement exactly the way the gold standard does, so scoring needs a **matching step**.
 
-**Decision (confirmed 4 Nov 2026):** use an LLM judge with a fixed prompt at temperature 0. It decides, for each generated requirement, which gold requirement (if any) it matches. Linh spot-checks 20% of judge decisions on the baseline run, and the agreement rate is recorded. If agreement is below 90%, change the judge prompt before trusting any scores. That agreement figure is part of the evidence the ruler is reliable.
+**Decision (confirmed 4 Nov 2026):** use an LLM judge with a fixed prompt and a structured (JSON schema) answer. *Updated 25 Nov 2026: the plan said temperature 0, but the Claude API removed temperature on 21 Oct 2026, which makes Linh's spot-check of the judge more important.* It decides, for each generated requirement, which gold requirement (if any) it matches. Linh spot-checks 20% of judge decisions on the baseline run, and the agreement rate is recorded. If agreement is below 90%, change the judge prompt before trusting any scores. That agreement figure is part of the evidence the ruler is reliable.
 
 | # | Task | Hrs | Done when |
 |---|---|---|---|
@@ -127,7 +127,7 @@ The tricky part: the engine will never word a requirement exactly the way the go
 | When | Decision | Default if you don't decide |
 |---|---|---|
 | 0.2 | Do any prior-knowledge findings narrow H1–H5? | Keep H1–H5 as is |
-| 1.4 | Which Claude model for engine runs vs the judge | Same mid-tier model for both; record the model ID in every run |
+| 1.4 | Which Claude model for engine runs vs the judge | Claude Sonnet 5.5 (`claude-sonnet-5-5`) for both; record the model ID in every run |
 | 2B | ~~Accept LLM-judge matching (with spot-checks)~~ | Confirmed 4 Nov 2026 |
 | 3.4 | Is the baseline already near target? If so, the benchmark may be too easy | Re-review the gold standards before Phase 4 |
 

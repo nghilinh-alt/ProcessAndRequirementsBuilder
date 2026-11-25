@@ -88,7 +88,7 @@ def test_whitespace_is_stripped():
 
 def test_run_record():
     r = Run(id="run-001", case="insurance_claims_finance", started_at=datetime(2026, 12, 22, 10, 0),
-            model="claude-x", temperature=0.0, seed=7)
+            model="claude-x", effort="medium", seed=7)
     assert r.seed == 7
 
 

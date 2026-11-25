@@ -53,7 +53,7 @@ class TraceLink(BaseModel):
 ```
 config/
   pipelines/       sequential.yaml, hierarchical.yaml
-  controls/        default.yaml (temperature, seed, schema strictness)
+  controls/        default.yaml (effort, schema strictness)
   state/           full_memory.yaml, summarised.yaml, trace_graph.yaml
 domain_packs/
   _generic.yaml    always loaded

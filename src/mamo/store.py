@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS llm_calls (
     stage TEXT,
     model TEXT NOT NULL,
     prompt_hash TEXT NOT NULL,
-    temperature REAL,
+    effort TEXT,
     tokens_in INTEGER,
     tokens_out INTEGER,
     latency_ms INTEGER,
@@ -172,6 +172,19 @@ class Store:
         ]
         stored_run_id = None if run_id.startswith("gold/") else run_id
         return TraceGraph(run_id=stored_run_id, links=links, **groups)
+
+    # --- LLM call log (written by mamo.llm.call) ------------------------------
+    def log_llm_call(self, **row) -> None:
+        cols = ", ".join(row)
+        marks = ", ".join("?" for _ in row)
+        with self.db:
+            self.db.execute(f"INSERT INTO llm_calls ({cols}) VALUES ({marks})", tuple(row.values()))
+
+    def llm_calls(self, run_id: str) -> list[dict]:
+        """Every logged call for a run, oldest first."""
+        cur = self.db.execute("SELECT * FROM llm_calls WHERE run_id = ? ORDER BY id", (run_id,))
+        names = [d[0] for d in cur.description]
+        return [dict(zip(names, row, strict=True)) for row in cur]
 
     # --- reading pieces -------------------------------------------------------
     def get_nodes(self, run_id: str, type_name: str) -> list[Node]:

@@ -72,7 +72,7 @@ These are *hypotheses*, not promises. The plan is built so that missing a target
 - **Exit:** H3 result logged; default state mode chosen.
 
 ### Phase 6 — Repeatability (Mar–Apr 2027)
-- Controls: fixed schemas, ID rules, temperature/seed, canonicaliser, deterministic ordering.
+- Controls: fixed schemas (structured outputs), ID rules, effort level, canonicaliser, deterministic ordering. (Temperature/seed aren't available: removed from the Claude API on 21 Oct 2026.)
 - 5 runs per case per setting; measure agreement.
 - **Exit:** H4 result logged; default control profile chosen.
 
